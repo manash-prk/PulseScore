@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+.env.local
+.env.*.local
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Backup & Scratch Files
+*.bak
+*.backup
+*.backup.js
+*.clean
+*.tmp
+*.log
+
+# Editor Directories
+.vscode/
+.idea/

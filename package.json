@@ -1,0 +1,32 @@
+{
+  "name": "pulsescore-redis-sports-dashboard",
+  "version": "1.0.0",
+  "description": "Real-time sports intelligence scoreboard powered by Upstash Redis NoSQL, SportAPI, and Socket.io",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check-api": "node verifySportApi.js",
+    "poller": "node pollAndSave.js",
+    "check-redis": "node checkRedis.js"
+  },
+  "keywords": [
+    "redis",
+    "nosql",
+    "sports-scoreboard",
+    "socket.io",
+    "express",
+    "real-time",
+    "upstash"
+  ],
+  "author": "Manash",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@upstash/redis": "^1.39.0",
+    "axios": "^1.20.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.2",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3"
+  }
+}
