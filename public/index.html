@@ -1980,10 +1980,21 @@
         return;
       }
 
+      const seen = new Set();
+      const uniqueEvents = [];
+      for (const ev of events) {
+        if (!ev) continue;
+        const key = ev.eventId ? String(ev.eventId) : `${ev.type}_${ev.minute}_${ev.team}_${ev.player}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueEvents.push(ev);
+        }
+      }
+
       let html = '';
       let halftimeAdded = false;
 
-      events.forEach(ev => {
+      uniqueEvents.forEach(ev => {
         const minute = Number(ev.minute || 0);
 
         // Insert Halftime Divider once when passing 45'
@@ -2058,9 +2069,19 @@
     // SCORERS UNDER SCORE
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     function renderScorers(events) {
-      const goals = events.filter(e => e.type === 'goal' && !e.demo && e.player !== 'Demo Player');
-      const homeGoals = goals.filter(e => e.team === 'home');
-      const awayGoals = goals.filter(e => e.team === 'away');
+      const seen = new Set();
+      const uniqueGoals = [];
+      for (const e of events) {
+        if (e.type !== 'goal' || e.demo || e.player === 'Demo Player') continue;
+        const key = e.eventId ? String(e.eventId) : `${e.minute}_${e.team}_${e.player}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueGoals.push(e);
+        }
+      }
+      uniqueGoals.sort((a, b) => (Number(a.minute) || 0) - (Number(b.minute) || 0));
+      const homeGoals = uniqueGoals.filter(e => e.team === 'home');
+      const awayGoals = uniqueGoals.filter(e => e.team === 'away');
 
       const formatScorer = g => {
         const name = g.player || 'Goal';
